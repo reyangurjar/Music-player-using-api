@@ -164,3 +164,10 @@ h1 {
         #change_vol {
             accent-color: #2ecc71
         }
+
+.maindiv{
+    display: -webkit-box;
+}
+.img{
+  padding-top: 56.25%;
+}

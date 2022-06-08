@@ -1,91 +1,79 @@
 import React, { useEffect, useState } from 'react'
-import { options } from './App.js'
 import playsvg from './svgs/play.svg'
-//result.video.publishedTimeText
-//result.video.thumbnails[0].url
-//result.Title
-//result.video.channelName
-//result.video.title
-//
+import {Loading} from "./Loading"
+import {options} from './App'
+import demo from './demo'
 
 const MovieCard = (props) => {
   const [audioUrl, setAudioUrl] = useState({});
   // const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   useEffect(() => {
-    // let isCancelled = false;
-    // if(!isCancelled){
     fetchaudio(searchTerm);
-    // }
-    // return () => {
-    // isCancelled = true;
-    // };
-
   }, [searchTerm])
 
+// const navigate = useNavigate();
 
+  const fetchaudio =  (videoId) => {
+    // setLoading(true);
 
-  const fetchaudio = (videoId) => {
-    // let isCancelled = false;
-    // fetch(`https://youtube-search-and-download.p.rapidapi.com/video?id=${videoId}`, 
-    // options)
-    // .then((response) => response.json())4
-    // .then((data) => {
-    // setAudioUrl(data);
-    console.log('this is the data', videoId)
-    // setLoading(false);
-    // })
-    // .catch((error) => {
-    // console.log(error);
-    // setLoading(false);
-    // });
-    // setSearchTerm('')
+    fetch(`https://youtube-search-and-download.p.rapidapi.com/video?id=${videoId}`, options)
+	.then(response => response.json())
+	.then(response => {
+    
+      setAudioUrl(response.streamingData.formats[0].url);
+       console.log(response.streamingData.formats[0].url)
+        console.log('Video Id is', videoId)
+  })
+	.catch(err => console.error(err));
+    
+        // setLoading(false); 
   }
-
-  // const [results, setResults] = useState([]);
-
-
+  // function handleClick() {
+  //   navigate("/demo");
+  //   console.log('handleclick is working')
+  // }
 
   const results = props.results
   return (
     <div>
-
+     
       {results?.length > 0 ? (
-        <div className="flex" >
+        <div className="maindiv flex-wrap" >
           {results.map(
             (result) => (
-             
-                <div className="m-2 w-40 h-[12rem]  songcard  text-white -z-[1]"
+
+              <div className="m-4 w-40 h-[12rem]  songcard  text-white -z-[1]"
+              >
+
+                <img
+                  className="img h-[16rem]"
+                  src={result.video.thumbnails[0].url}
+                  // onClick={() => {handleClick ()}}
+
+                />
+                <button
+                  className="relative  bottom-[6.5rem] left-14  z-10"
+                  onClick={() => { setSearchTerm(result.video.videoId) }}
+
                 >
-
-                  <img
-                    className="h-[10rem] w-40"
-                    src={result.video.thumbnails[0].url}
-
-                  />
-                  <button
-                    className="relative  bottom-[6.5rem] left-14  z-10"
-                    onClick={() => { setSearchTerm(result.video.videoId) }}
-
-                  >
-                    <img src={playsvg} className="" alt="" />
-                  </button>
-                  <div className=" bg-white h-[3rem] truncate overflow-hidden  text-black pl-2 relative bottom-[3.9rem]">
-                    <p className="font-bold text text-base truncate ">
-                      {result.video.title}
-                    </p>
-                  </div>
+                  <img src={playsvg} className="" alt="" />
+                </button>
+                <div className=" bg-white h-[3rem] truncate overflow-hidden  text-black pl-2 relative bottom-[3.9rem]">
+                  <p className="font-bold text text-base truncate ">
+                    {result.video.title}
+                  </p>
                 </div>
-             
-            ))}
+              </div>
+    
+            ))}  
         </div>
       ) : (
-        <div className="empty">
-          <h2>No videos found</h2>
-        </div>
+        <Loading/>
       )}
-
+          
     </div>
+     
   )
 }
 

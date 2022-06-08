@@ -18,3 +18,7 @@
     </p>
   </div>
 </div>
+
+
+setAudioUrl(data.streamingData.formats[0].url);
+       

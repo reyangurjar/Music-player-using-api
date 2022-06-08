@@ -1,7 +1,8 @@
+import { Outlet, Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import React from 'react';
 import './index.css';
-
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import searchIcon from './search.svg'
 import Card from './Card'
 
@@ -29,11 +30,10 @@ export const options = {
 function App() {
   const [results, setResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-
+ const location = useLocation();
 
   const searchYoutube = async (title) => {
     const response = await fetch(`${API_URL}?query=${title}&type=v&sort=r`, options);
-    // const response = await fetch(`https://youtube-search-and-download.p.rapidapi.com/video?id=${title}`, options);
     const data = await response.json();
     setResults(data.contents)
     console.log(data.contents)
@@ -45,10 +45,12 @@ function App() {
     searchYoutube('tech burner')
   }, [])
 
-
+ 
   return (
     <div className='app'>
-      <h1>Youtube Mania</h1>
+      <Link to="/demo">
+       <h1>Youtube Mania</h1>
+        </Link>
       <div className="search" >
         <input
           placeholder="Search for Movies of your choice"
@@ -66,10 +68,11 @@ function App() {
 
         />
       </div>
-      <Card results={results}/>
-
-
-    </div>
+     
+       <Outlet/>
+     
+   </div>
+      
   );
 }
 
