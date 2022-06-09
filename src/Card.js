@@ -2,14 +2,16 @@ import React, { useEffect, useState } from 'react'
 import playsvg from './svgs/play.svg'
 import {Loading} from "./Loading"
 import {options} from './App'
-import demo from './demo'
+// import demo from './demo'
 
 const MovieCard = (props) => {
   const [audioUrl, setAudioUrl] = useState({});
   // const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   useEffect(() => {
-    fetchaudio(searchTerm);
+    if(searchTerm !== ""){
+      fetchaudio(searchTerm);
+    }
   }, [searchTerm])
 
 // const navigate = useNavigate();
@@ -44,7 +46,7 @@ const MovieCard = (props) => {
             (result) => (
 
               <div className="m-4 w-40 h-[12rem]  songcard  text-white -z-[1]"
-              >
+              key={result.video.videoId}>
 
                 <img
                   className="img h-[16rem]"

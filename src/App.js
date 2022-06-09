@@ -1,4 +1,4 @@
-import { Outlet, Link, useLocation } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import React from 'react';
 import './index.css';
@@ -30,8 +30,6 @@ export const options = {
 function App() {
   const [results, setResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
- const location = useLocation();
-
   const searchYoutube = async (title) => {
     const response = await fetch(`${API_URL}?query=${title}&type=v&sort=r`, options);
     const data = await response.json();
@@ -45,12 +43,12 @@ function App() {
     searchYoutube('tech burner')
   }, [])
 
- 
+
   return (
     <div className='app'>
       <Link to="/demo">
-       <h1>Youtube Mania</h1>
-        </Link>
+        <h1>Youtube Mania</h1>
+      </Link>
       <div className="search" >
         <input
           placeholder="Search for Movies of your choice"
@@ -68,11 +66,11 @@ function App() {
 
         />
       </div>
-     
-       <Outlet/>
-     
-   </div>
-      
+            <Card results={results}/>
+      <Outlet />
+
+    </div>
+
   );
 }
 
