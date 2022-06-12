@@ -1,82 +1,65 @@
-import React, { useEffect, useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import playsvg from './svgs/play.svg'
 import {Loading} from "./Loading"
-import {options} from './App'
-// import demo from './demo'
-
+import Video_details from './Video_details'
+import Music_player from './Music_player'
 const MovieCard = (props) => {
-  const [audioUrl, setAudioUrl] = useState({});
-  // const [loading, setLoading] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-  useEffect(() => {
-    if(searchTerm !== ""){
-      fetchaudio(searchTerm);
-    }
-  }, [searchTerm])
+    const [videoId, setVideoId] = useState("");
 
-// const navigate = useNavigate();
+    // const [loading, setLoading] = useState(false);
 
-  const fetchaudio =  (videoId) => {
-    // setLoading(true);
 
-    fetch(`https://youtube-search-and-download.p.rapidapi.com/video?id=${videoId}`, options)
-	.then(response => response.json())
-	.then(response => {
-    
-      setAudioUrl(response.streamingData.formats[0].url);
-       console.log(response.streamingData.formats[0].url)
-        console.log('Video Id is', videoId)
-  })
-	.catch(err => console.error(err));
-    
-        // setLoading(false); 
-  }
-  // function handleClick() {
-  //   navigate("/demo");
-  //   console.log('handleclick is working')
-  // }
+    const results = props.results
+    return (
+        <div> { videoId == "" ? results ?. length > 0 ? (
+                <div>
+                    <div className="maindiv flex-wrap">
+                        {
+                        results.map((result) => (
 
-  const results = props.results
-  return (
-    <div>
-     
-      {results?.length > 0 ? (
-        <div className="maindiv flex-wrap" >
-          {results.map(
-            (result) => (
+                            <div className="m-4 w-40 h-[12rem]  songcard  text-white -z-[1]"
+                                key={
+                                    result.video.videoId
+                            }>
 
-              <div className="m-4 w-40 h-[12rem]  songcard  text-white -z-[1]"
-              key={result.video.videoId}>
+                                <img className="img h-[16rem]"
+                                    src={
+                                        result.video.thumbnails[0].url
+                                    }
+                                    // onClick={() => {handleClick ()}}
+                                />
+                                <button className="relative  bottom-[6.5rem] left-14  z-10"
+                                    onClick={
+                                        () => {
+                                            setVideoId(result.video.videoId)
+                                        }
+                                }>
+                                    <img src={playsvg}
+                                        className=""
+                                        alt=""/>
+                                </button>
+                                <div className=" bg-white h-[3rem] truncate overflow-hidden  text-black pl-2 relative bottom-[3.9rem]">
+                                    <p className="font-bold text text-base truncate ">
+                                        {
+                                        result.video.title
+                                    } </p>
+                                </div>
+                            </div>
 
-                <img
-                  className="img h-[16rem]"
-                  src={result.video.thumbnails[0].url}
-                  // onClick={() => {handleClick ()}}
+                        ))
+                    } </div>
 
-                />
-                <button
-                  className="relative  bottom-[6.5rem] left-14  z-10"
-                  onClick={() => { setSearchTerm(result.video.videoId) }}
-
-                >
-                  <img src={playsvg} className="" alt="" />
-                </button>
-                <div className=" bg-white h-[3rem] truncate overflow-hidden  text-black pl-2 relative bottom-[3.9rem]">
-                  <p className="font-bold text text-base truncate ">
-                    {result.video.title}
-                  </p>
                 </div>
-              </div>
-    
-            ))}  
-        </div>
-      ) : (
-        <Loading/>
-      )}
-          
-    </div>
-     
-  )
+            ) : (
+                <Loading/>) : <div>
+                    {/* <Video_details videoId={videoId}
+                        onVideoIdChange={setVideoId}/> */}
+                    <Music_player videoId={videoId}
+                        onVideoIdChange={setVideoId}/>
+                        </div>
+        } </div>
+
+    )
 }
 
 export default MovieCard

@@ -1,21 +1,21 @@
 import React from 'react'
 import './index.css'
 import ReactDOM from "react-dom";
-import Demo from './demo'
+import Video_details from './Video_details'
 import Card from './Card'
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
+// import {
+//   BrowserRouter,
+//   Routes,
+//   Route,
+// } from "react-router-dom";
 import App from './App'
 ReactDOM.render(
    
   <React.StrictMode>
-    <BrowserRouter>
+    {/* <BrowserRouter>
    <Routes>
   <Route path="/" element={<App />}>
-    <Route path="demo" element={<Demo/>} />
+    <Route path="Song_audio" element={<Song_audio/>} />
     <Route
       path="*"
       element={
@@ -26,7 +26,8 @@ ReactDOM.render(
     />
   </Route>
 </Routes>
-  </BrowserRouter>
+  </BrowserRouter> */}
+  <App/>
   </React.StrictMode>,
   document.getElementById('root')
 )

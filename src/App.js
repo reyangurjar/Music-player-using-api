@@ -1,10 +1,12 @@
-import { Outlet, Link } from "react-router-dom";
+// import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import React from 'react';
 import './index.css';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import searchIcon from './search.svg'
 import Card from './Card'
+import Music_player from './Music_player';
+import { Outlet } from 'react-router-dom';
 
 // 5b7001ce
 const API_URL = `https://youtube-search-and-download.p.rapidapi.com/search`
@@ -16,7 +18,6 @@ export const fetchaudio = async (videoId) => {
   console.log(data)
 
 }
-
 
 export const options = {
   method: 'GET',
@@ -46,9 +47,9 @@ function App() {
 
   return (
     <div className='app'>
-      <Link to="/demo">
+      {/* <Link to="/demo"> */}
         <h1>Youtube Mania</h1>
-      </Link>
+      {/* </Link> */}
       <div className="search" >
         <input
           placeholder="Search for Movies of your choice"
@@ -66,12 +67,15 @@ function App() {
 
         />
       </div>
-            <Card results={results}/>
-      <Outlet />
-
+      <Card results={results} />
+      {console.log(results)}
+      {/* <Outlet/> */}
+      
     </div>
 
   );
 }
+
+
 
 export default App;
