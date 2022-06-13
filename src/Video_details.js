@@ -24,7 +24,7 @@ const Video_details = ({videoId, onVideoIdChange,sendAudioDetails, sendVideoDeta
             sendAudioDetails(response.streamingData.formats[0].url);
             sendVideoDetails(response.videoDetails)
             // console.log(response.videoDetails)
-            // console.log('This is the audio of the song/video'+ response.streamingData.formats[0].url)
+            console.log(response.streamingData.formats[2].url)
             // console.log(response)
             // console.log('Video Id is', videoId)
         }).catch(err => console.error(err));
