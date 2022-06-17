@@ -1,5 +1,5 @@
 import Video_details from './Video_details'
-import {useCallback, useState, useEffect,useRef} from 'react'
+import {useCallback, useState, useEffect, useRef} from 'react'
 import {Loading} from './Loading'
 import ReactAudioPlayer from 'react-audio-player';
 import playSvg from './svgs/play.svg'
@@ -46,55 +46,37 @@ const Music_player = ({videoId}) => {
     });
 
     // useScript('./music_player_js');
+    // thumbnail?.thumbnails[1].url
+    // videoDetails.title
+    // <Controls isPlaying={isPlaying} setIsPlaying={setIsPlaying}  />
     return (
         <>
             <Video_details videoId={videoId}
                 sendVideoDetails={getVideoDetails}
                 sendAudioDetails={getAudioDetails}/>
-                <audio  ref={audioEl} src={audioUrl}
-                        id="audio"></audio>
-                        
-                 {
-            audioUrl == "" ? <Loading/>: <div> {/* <ReactAudioPlayer
-  src={audioUrl}
-  controls
-/>  */}
-                <div className="music-player  w-[100vw] z-[2] flex-col sm:flex-row h-[8rem] sm:flex fixed bottom-0 left-0 right-0 bg-[#02030f] text-white">
-                    
-                    {/* {playSong('jhinasdasdsad')} */}
+            <audio ref={audioEl}
+                src={audioUrl}
+                id="audio">  
+            </audio>
+
+            {
+            audioUrl == "" ? <Loading/>: <div>
+                <div className="music-player  w-[100vw] left-0 z-[2] flex-col sm:flex-row h-[8rem] sm:flex fixed bottom-0 bg-[#02030f] text-white">
                     <div className="flex items-center  justify-center">
-                        <img className="w-[5rem] h-[4rem]  border rounded-lg"
+                        <img id="cover" className="w-[7rem] h-[5rem]  border rounded-xl"
                             src={
                                 thumbnail ?. thumbnails[1].url
                             }
                             alt="Cover"/>
-
-
-                        <h1 className="ml-2  text-black-900 text-lg">
+                        <h1 id="title" className="ml-2 w-56 text-black-900 text-lg">
                             {
                             videoDetails.title
                         } </h1>
                     </div>
-                    <div className=" m-auto flex-col">
-                        {/* <input className="sm:w-44 md:w-96 lg:w-96 w-48" value="0" type="range"/> */}
-                        <div className="navigations flex items-center justify-center relative">
-                            {/* <img className="w-12" src="svgs/skip_previous_white_24dp.svg" /> */}
 
-                            <Controls isPlaying={isPlaying} setIsPlaying={setIsPlaying}  />
+                    <Controls isPlaying={isPlaying}
+                        setIsPlaying={setIsPlaying} ref={audioEl}/>
 
-
-                            {/* <i className="ml-8 filter invert fa-2x fa-solid fa-forward-step"  /> */} </div>
-                    </div>
-
-                    <div className="flex  items-center ">
-                        <div id="shufflediv" className="mx-3 inline-block   border rounded-2xl  ">
-                            {/* <img id="shuffledivimg" className=" " src="svgs/shuffle.svg"/></div>  */}
-                            <div id="repeatdiv" className="mx-3 inline-block border rounded-2xl ">
-                                <img id="repeatimg" className="filter invert  " src="svgs/repeat.svg"/></div>
-                            <div className="mr-1  hidden sm:block">
-                                <img id="volumeicon" src="svgs/volume_up.svg" className=""/></div>
-                            {/* <input className="hidden sm:block filter invert mr-1 w-14 sm:w-24 md:w-36 lg:max-w-full" type="range" id="change_vol"  step="0.001" min="0" max="1" value="1"/> */} </div>
-                    </div>
                 </div>
             </div>
         } </>
